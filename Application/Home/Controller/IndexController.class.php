@@ -6,6 +6,6 @@ class IndexController extends Controller {
     public function index(){
         $qqmusicApi = new TencentMusicAPI();
         $results = $qqmusicApi->search('菊花台');
-        echo $results;
+        print_r($results);
     }
 }

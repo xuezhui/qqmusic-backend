@@ -44,6 +44,10 @@ class TencentMusicAPI{
         );
         return substr($this->curl($url.http_build_query($data)),9,-1);
     }
+    /**
+    *@param:singer mid
+    *@return:singer hot songs
+    **/
     public function artist($artist_mid){
         $url='http://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg?';
         $data=array(
@@ -54,6 +58,7 @@ class TencentMusicAPI{
         );
         return substr($this->curl($url.http_build_query($data)),0,-1);
     }
+    //专辑解析
     public function album($album_mid){
         $url='http://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg?';
         $data=array(
@@ -61,6 +66,7 @@ class TencentMusicAPI{
         );
         return substr($this->curl($url.http_build_query($data)),1);
     }
+    //歌曲详细信息
     public function detail($song_mid){
         $url='http://c.y.qq.com/v8/fcg-bin/fcg_play_single_song.fcg?';
         $data=array(
@@ -69,6 +75,7 @@ class TencentMusicAPI{
         );
         return $this->curl($url.http_build_query($data));
     }
+    
     private function genkey(){
         $this->_GUID=rand(1,2147483647)*(microtime()*1000)%10000000000;
         $data=$this->curl('https://c.y.qq.com/base/fcgi-bin/fcg_musicexpress.fcg?json=3&guid='.$this->_GUID);
@@ -76,6 +83,7 @@ class TencentMusicAPI{
         //$this->_CDN=json_decode(substr($data,13,-2),1)['sip'][0];
         $this->_CDN='http://dl.stream.qqmusic.qq.com/';
     }
+    // 歌曲地址获取
     public function url($song_mid){
         self::genkey();
         $url='http://c.y.qq.com/v8/fcg-bin/fcg_play_single_song.fcg?';
@@ -98,6 +106,7 @@ class TencentMusicAPI{
         }
         return json_encode($url);
     }
+    // 歌单解析
     public function playlist($playlist_id){
         $url='http://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg?';
         $data=array(
@@ -107,6 +116,7 @@ class TencentMusicAPI{
         );
         return substr($this->curl($url.http_build_query($data)),13,-1);
     }
+    // 歌词解析
     public function lyric($song_mid){
         $url='http://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg?';
         $data=array(
