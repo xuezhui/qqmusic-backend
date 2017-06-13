@@ -45,6 +45,7 @@ class TencentMusicAPI{
         return substr($this->curl($url.http_build_query($data)),9,-1);
     }
     /**
+    *歌手
     *@param:singer mid
     *@return:singer hot songs
     **/
@@ -58,7 +59,7 @@ class TencentMusicAPI{
         );
         return substr($this->curl($url.http_build_query($data)),0,-1);
     }
-    //专辑解析
+    //专辑
     public function album($album_mid){
         $url='http://c.y.qq.com/v8/fcg-bin/fcg_v8_album_info_cp.fcg?';
         $data=array(
@@ -124,5 +125,28 @@ class TencentMusicAPI{
             'nobase64'=>'1',
         );
         return substr($this->curl($url.http_build_query($data)),18,-1);
+    }
+    public function topicLists(){
+        $url = 'http://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_opt.fcg?';
+        $data = array(
+            'page'=>'index',
+            'format'=>'html',
+            'tpl'=>'macv4',
+            'jsonCallback'=>'jsonCallback',
+            'v8debug'=>1
+        );
+        $jsonCallback = $this->curl($url.http_build_query($data));
+        return substr($jsonCallback,14,-2);
+    }
+    // 排行榜
+    public function topic($topic_id){        
+        $url='http://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?';
+        $data=array(
+            'tpl'=>3,
+            'page'=>'detail',
+            'topid'=>$topic_id,
+            'song_num'=>30
+        );
+        return $this->curl($url.http_build_query($data));
     }
 }
